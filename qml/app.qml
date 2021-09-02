@@ -18,50 +18,116 @@ ApplicationWindow {
     QtObject {
         id: internal
         // JavaScript Here!!!
+
         function test() {
-            console.log("test")
+            console.log("test");
         }
+
         function closeWindow(window) {
             window.visible = false
+            desktop.visible = true
         }
-    }
 
-    // Item manager
-    Rectangle {
-        id: itemManager
-        width: parent.width
-        height: 40
-        color: "#141414"
-        anchors.bottom: parent.bottom
+        function openWindow(window) {
+            window.visible = true
+            desktop.visible = false
+        }
     }
 
     Rectangle {
         id: fileTop
+
         width: parent.width
         height: 25
-        color: "#141414"
+        color: "#0f0f0f"
         anchors.top: parent.top
         Text {
+            width: parent.width
             text: qsTr("Welcome, " + window.username)
             color: "#fff"
             anchors.verticalCenter: parent.verticalCenter
         }
     }
 
-    
-    // Welcome app
     Rectangle {
-        id: welcomeApp
+        id: desktop
         visible: true
+
+        anchors {
+            top: fileTop.bottom
+            bottom: itemManager.top
+            left: parent.left
+            right: parent.right
+        }
+
+        // Background
+
+        Image {
+            id: img
+            source: "../img/background.jpg"
+            anchors.fill: parent.parent
+        }
+
+        
+        // Launch Settings
+    
+        Image {
+            id: settingsAppLaunch
+
+            height: 55
+            width: 55
+
+            source: "../img/settings.png"
+
+            anchors {
+                topMargin: 25
+                leftMargin: 25
+                top: parent.top
+                left: parent.left
+            }
+            
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: internal.openWindow(settingsApp)
+            }
+
+        }
+
+    }
+    // Item manager
+    Rectangle {
+        id: itemManager
+        width: parent.width
+        height: 40
+        color: "#0f0f0f"
+        anchors.bottom: parent.bottom
+    }   
+
+    
+    // Settings app
+    Rectangle {
+        id: settingsApp
+        visible: false
         color: "#2e2e2e"
         Button {
-            id: welcomeAppClose
+            id: settingsAppClose
             highlighted: true
             Material.background: Material.Pink
-            anchors.top: welcomeApp.top
+            anchors.top: settingsApp.top
             width: 20
-            anchors.left: welcomeApp.left
-            onClicked: internal.closeWindow(welcomeApp)
+            anchors.left: settingsApp.left
+            onClicked: internal.closeWindow(settingsApp)
+        }
+        Text {
+            text: qsTr("Settings")
+            color: "#fff"
+            font.pointSize: 11
+            anchors {
+                left: settingsAppClose.right
+                verticalCenter: settingsAppClose.verticalCenter 
+                leftMargin: 10
+            }
         }
         anchors {
             left: parent.left
@@ -74,15 +140,25 @@ ApplicationWindow {
         Rectangle {
             // Content
 
+            id: settingsAppContent
+
             anchors {
-                top: welcomeAppClose.bottom
+                top: settingsAppClose.bottom
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
+                leftMargin: 12
+                topMargin: 7
+                rightMargin: 12
+                bottomMargin:7
             }
             color: "transparent"
+
             Text {
-                text: qsTr("")
+                anchors.top: parent.top
+                font.pointSize: 15
+                color: "#ffffff"
+                text: qsTr("Settings to 8shell!")
             }
         }
             
