@@ -32,136 +32,178 @@ ApplicationWindow {
             window.visible = true
             desktop.visible = false
         }
-    }
-
-    Rectangle {
-        id: fileTop
-
-        width: parent.width
-        height: 25
-        color: "#0f0f0f"
-        anchors.top: parent.top
-        Text {
-            width: parent.width
-            text: qsTr("Welcome, " + window.username)
-            color: "#fff"
-            anchors.verticalCenter: parent.verticalCenter
+        function sleep(milliseconds) {
+            const date = Date.now();
+            let currentDate = null;
+            do {
+                currentDate = Date.now();
+            } while (currentDate - date < milliseconds);
         }
     }
 
-    Rectangle {
-        id: desktop
-        visible: true
-
-        anchors {
-            top: fileTop.bottom
-            bottom: itemManager.top
-            left: parent.left
-            right: parent.right
-        }
-
-        // Background
-
-        Image {
-            id: img
-            source: "../img/background.jpg"
-            anchors.fill: parent.parent
-        }
-
+    // Rectangle {
+    //     id: boot
         
-        // Launch Settings
-    
-        Image {
-            id: settingsAppLaunch
+    //     anchors.verticalCenter: parent.verticalCenter
+    //     anchors.horizontalCenter: parent.horizontalCenter
+        
+    //     Image {
+    //         id: bootImage1
+    //         source: "../img/8shell.png"
+    //         anchors.verticalCenter: parent.verticalCenter
+    //         anchors.horizontalCenter: parent.horizontalCenter
 
-            height: 55
-            width: 55
-
-            source: "../img/settings.png"
-
-            anchors {
-                topMargin: 25
-                leftMargin: 25
-                top: parent.top
-                left: parent.left
-            }
+    //         width: 300
+    //         height: 300
+    //     }
+    //     Text {
+    //         id: bootText1
+    //         text: "Loading"
             
+    //         color: "#ffffff"
+    //         font.pixelSize: 20
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: internal.openWindow(settingsApp)
-            }
-
-        }
-
-    }
-    // Item manager
-    Rectangle {
-        id: itemManager
-        width: parent.width
-        height: 40
-        color: "#0f0f0f"
-        anchors.bottom: parent.bottom
-    }   
-
-    
-    // Settings app
-    Rectangle {
-        id: settingsApp
-        visible: false
-        color: "#2e2e2e"
-        Button {
-            id: settingsAppClose
-            highlighted: true
-            Material.background: Material.Pink
-            anchors.top: settingsApp.top
-            width: 20
-            anchors.left: settingsApp.left
-            onClicked: internal.closeWindow(settingsApp)
-        }
-        Text {
-            text: qsTr("Settings")
-            color: "#fff"
-            font.pointSize: 11
-            anchors {
-                left: settingsAppClose.right
-                verticalCenter: settingsAppClose.verticalCenter 
-                leftMargin: 10
-            }
-        }
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: fileTop.bottom
-            bottom: itemManager.top
-        }
-
+    //         anchors {
+    //             top: bootImage1.bottom
+    //             horizontalCenter: parent.horizontalCenter
+    //         }
+            
+    //     }
         
-        Rectangle {
-            // Content
+    // }
 
-            id: settingsAppContent
+    // Rectangle {
+    //     id: afterBoot
+        // visible: false
+
+        Rectangle {
+            id: fileTop
+
+            width: parent.width
+            height: 25
+            color: "#0f0f0f"
+            anchors.top: parent.top
+            Text {
+                width: parent.width
+                text: qsTr("Welcome, " + window.username)
+                color: "#fff"
+                anchors.verticalCenter: parent.verticalCenter
+            }
+        }
+
+        Rectangle {
+            id: desktop
+            visible: true
 
             anchors {
-                top: settingsAppClose.bottom
+                top: fileTop.bottom
+                bottom: itemManager.top
                 left: parent.left
                 right: parent.right
-                bottom: parent.bottom
-                leftMargin: 12
-                topMargin: 7
-                rightMargin: 12
-                bottomMargin:7
             }
-            color: "transparent"
 
-            Text {
-                anchors.top: parent.top
-                font.pointSize: 15
-                color: "#ffffff"
-                text: qsTr("Settings to 8shell!")
+            // Background
+
+            Image {
+                id: img
+                source: "../img/background.jpg"
+                anchors.fill: parent.parent
             }
-        }
+
             
-    }
+            // Launch Settings
+        
+            Image {
+                id: settingsAppLaunch
 
+                height: 55
+                width: 55
+
+                source: "../img/settings.png"
+
+                anchors {
+                    topMargin: 25
+                    leftMargin: 25
+                    top: parent.top
+                    left: parent.left
+                }
+                
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: internal.openWindow(settingsApp)
+                }
+
+            }
+
+        }
+        // Item manager
+        Rectangle {
+            id: itemManager
+            width: parent.width
+            height: 40
+            color: "#0f0f0f"
+            anchors.bottom: parent.bottom
+        }   
+
+
+
+        
+        // Settings app
+        Rectangle {
+            id: settingsApp
+            visible: false
+            color: "#2e2e2e"
+            Button {
+                id: settingsAppClose
+                highlighted: true
+                Material.background: Material.Pink
+                anchors.top: settingsApp.top
+                width: 20
+                anchors.left: settingsApp.left
+                onClicked: internal.closeWindow(settingsApp)
+            }
+            Text {
+                text: qsTr("Settings")
+                color: "#fff"
+                font.pointSize: 11
+                anchors {
+                    left: settingsAppClose.right
+                    verticalCenter: settingsAppClose.verticalCenter 
+                    leftMargin: 10
+                }
+            }
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: fileTop.bottom
+                bottom: itemManager.top
+            }
+
+            
+            Rectangle {
+                // Content
+
+                id: settingsAppContent
+
+                anchors {
+                    top: settingsAppClose.bottom
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                    leftMargin: 12
+                    topMargin: 7
+                    rightMargin: 12
+                    bottomMargin:7
+                }
+                color: "transparent"
+
+                Text {
+                    anchors.top: parent.top
+                    font.pointSize: 15
+                    color: "#ffffff"
+                    text: qsTr("Settings to 8shell!")
+                }
+            } 
+        }
 }
